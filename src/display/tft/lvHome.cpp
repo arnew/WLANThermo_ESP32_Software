@@ -1,4 +1,4 @@
-/*************************************************** 
+/***************************************************
     Copyright (C) 2020  Martin Koerner
 
     This program is free software: you can redistribute it and/or modify
@@ -13,9 +13,9 @@
 
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
-    
+
     HISTORY: Please refer Github History
-    
+
 ****************************************************/
 #include "lvHome.h"
 #include "lvScreen.h"
@@ -65,6 +65,7 @@ static void lvHome_NavigationMenuEvent(lv_obj_t *obj, lv_event_t event);
 static void lvHome_NavigationLeftEvent(lv_obj_t *obj, lv_event_t event);
 static void lvHome_NavigationRightEvent(lv_obj_t *obj, lv_event_t event);
 static void lvHome_NavigationWifiEvent(lv_obj_t *obj, lv_event_t event);
+static void lvHome_NavigationPitmasterEvent(lv_obj_t *obj, lv_event_t event);
 
 void lvHome_Create(void *userData)
 {
@@ -123,6 +124,7 @@ void lvHome_Create(void *userData)
   lv_obj_set_style_local_value_str(lvHome.symbols.btnPitmaster, LV_OBJ_PART_MAIN, LV_STATE_DEFAULT, "J");
   lv_obj_set_size(lvHome.symbols.btnPitmaster, 40, 40);
   lv_obj_set_pos(lvHome.symbols.btnPitmaster, 160, 0);
+  lv_obj_set_event_cb(lvHome.symbols.btnPitmaster, lvHome_NavigationPitmasterEvent);
 
   /* create alarm symbol */
   lvHome.symbols.btnAlarm = lv_btn_create(contHeader, NULL);
@@ -403,7 +405,8 @@ void lvHome_CreateMsgBox(const char *text, lv_color_t textColor)
   lv_obj_set_width(mbox, 200);
   lv_obj_align(mbox, NULL, LV_ALIGN_CENTER, 0, 0);
   lv_obj_set_event_cb(mbox,
-                      [](lv_obj_t *obj, lv_event_t event) {
+                      [](lv_obj_t *obj, lv_event_t event)
+                      {
                         if (event == LV_EVENT_VALUE_CHANGED)
                         {
                           const char *buttonText = lv_msgbox_get_text(obj);
@@ -697,5 +700,13 @@ void lvHome_NavigationWifiEvent(lv_obj_t *obj, lv_event_t event)
   if (LV_EVENT_CLICKED == event)
   {
     lvScreen_Open(lvScreenType::Wifi);
+  }
+}
+
+void lvHome_NavigationPitmasterEvent(lv_obj_t *obj, lv_event_t event)
+{
+  if (LV_EVENT_CLICKED == event)
+  {
+    lvScreen_Open(lvScreenType::Pitmaster);
   }
 }
