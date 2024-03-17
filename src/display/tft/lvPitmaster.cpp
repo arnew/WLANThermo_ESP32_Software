@@ -53,6 +53,8 @@ void lvPitmaster_saveTemperature(void)
 
   value = ((float)lv_spinbox_get_value(lvPitmaster.spinbox)) / 10.0f;
   lvPitmaster_pitmaster->setTargetTemperature(value);
+
+  gSystem->pitmasters.saveConfig();
 }
 
 void lvPitmaster_BtnClose(lv_obj_t *obj, lv_event_t event)
@@ -70,8 +72,6 @@ void lvPitmaster_Create(void *userData)
 
   /* create screen for update */
   lvPitmaster.screen = lv_obj_create(NULL, NULL);
-
-
 
   lv_obj_t *cont = lv_cont_create(lvPitmaster.screen, NULL);
   lv_cont_set_fit(cont, LV_FIT_PARENT);
@@ -113,7 +113,7 @@ void lvPitmaster_Create(void *userData)
 
 void lvPitmaster_Update(boolean forceUpdate)
 {
-    // lv_spinbox_set_value(lvPitmaster.spinbox, ((int32_t)lvPitmaster_pitmaster->getTargetTemperature()) * 10.0f);
+  // lv_spinbox_set_value(lvPitmaster.spinbox, ((int32_t)lvPitmaster_pitmaster->getTargetTemperature()) * 10.0f);
 }
 
 void lvPitmaster_Delete(void)
